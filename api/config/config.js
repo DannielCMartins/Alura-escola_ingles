@@ -1,27 +1,3 @@
-// {
-//   "development": {
-//     "username": "dann",
-//     "password": "simples",
-//     "database": "escola_ingles",
-//     "host": "127.0.0.1",
-//     "dialect": "mysql"
-//   },
-//   "test": {
-//     "username": "dann",
-//     "password": "simples",
-//     "database": "escola_ingles",
-//     "host": "127.0.0.1",
-//     "dialect": "mysql"
-//   },
-//   "production": {
-//     "username": "dann",
-//     "password": "simples",
-//     "database": "escola_ingles",
-//     "host": "127.0.0.1",
-//     "dialect": "mysql"
-//   }
-// }
-
 require('dotenv').config()
 
 module.exports = {
