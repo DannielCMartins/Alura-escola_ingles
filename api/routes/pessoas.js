@@ -10,5 +10,7 @@ router.post('/pessoas', PessoaController.criaPessoa)
 
 router.put('/pessoas/:id', PessoaController.atualizarPessoa)
 
+router.delete('/pessoas/:id', PessoaController.deletaPessoa)
+
 
 module.exports = router;
