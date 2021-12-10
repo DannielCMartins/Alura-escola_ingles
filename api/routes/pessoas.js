@@ -6,5 +6,7 @@ const router = Router()
 router.get('/pessoas', PessoaController.lista)
 router.get('/pessoas/:id', PessoaController.listaPorId)
 
+router.post('/pessoas', PessoaController.criaPessoa)
+
 
 module.exports = router;
