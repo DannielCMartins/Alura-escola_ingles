@@ -1,9 +1,18 @@
 const database = require('../models');
 
 class PessoaController {
+  static async listaAtivos(req, res) {
+    try {
+      const pessoasAtivas = await database.Pessoas.findAll()
+      return res.status(200).json(pessoasAtivas);
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+
   static async lista(req, res) {
     try {
-      const pessoas = await database.Pessoas.findAll()
+      const pessoas = await database.Pessoas.scope('todas').findAll()
       return res.status(200).json(pessoas);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -132,6 +141,17 @@ class PessoaController {
         } 
       })
       return res.status(200).json({ mensagem: `id ${matriculaId} restaurado`})
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async pegaMatricula(req, res) {
+    const { estudanteId } = req.params
+    try {
+      const pessoa = await database.Pessoas.findOne({ where: { id: Number(estudanteId)}});
+      const matricula = await pessoa.getAulasMatriculadas()
+      return res.status(200).json(matricula)
     } catch (error) {
       return res.status(500).json(error.message)
     }

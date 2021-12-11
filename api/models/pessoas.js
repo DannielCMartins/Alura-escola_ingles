@@ -8,18 +8,44 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'docente_id'
       }),
       Pessoas.hasMany(models.Matriculas, {
-        foreignKey: 'estudante_id'
+        foreignKey: 'estudante_id',
+        scope: {
+          status: 'confirmado'
+        },
+        as: 'aulasMatriculadas'
       })
     }
   };
   Pessoas.init({
-    nome: DataTypes.STRING,
+    nome: {
+      type: DataTypes.STRING,
+      validate: {
+        validaNome: dados => {
+          if (dados.length < 4) throw new Error(`Nome invalido(O Campo nome deve conter mais de
+                                                   4 caracteres)`)
+        },
+      }
+    },
     ativo: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate:{
+        isEmail: {
+          args: true,
+          msg: `Dados do e-mail inválidos`
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,
     paranoid: true,
+    defaultScope: {
+      where: { ativo: true },
+    },
+    scopes: {
+      todas: { where:{ } }
+    },
     modelName: 'Pessoas',
   });
   return Pessoas;
