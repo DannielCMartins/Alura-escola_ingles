@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     data_inicio: DataTypes.DATEONLY
   }, {
     sequelize,
+    paranoid: true,
     modelName: 'Turmas',
-  }, { paranoid: true });
+  });
   return Turmas;
 };
