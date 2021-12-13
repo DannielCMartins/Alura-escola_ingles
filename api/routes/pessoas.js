@@ -1,25 +1,33 @@
 const { Router } = require('express')
 const PessoaController = require('../controllers/PessoaController')
+const MatriculaController = require('../controllers/MatriculaController')
 
 const router = Router()
 
-router.get('/pessoas/ativos', PessoaController.listaAtivos)
-router.get('/pessoas/todos', PessoaController.lista)
-router.get('/pessoas/:id', PessoaController.listaPorId)
+/**Pessoas*/
+router.get('/pessoas', PessoaController.todasAsPessoas)  
+router.get('/pessoas/ativas', PessoaController.pessoasAtivas)  
+router.get('/pessoas/:id', PessoaController.pessoa)  
+router.get('/pessoas/:estudanteId/matricula', PessoaController.pegaMatriculas) 
+
 router.post('/pessoas', PessoaController.criaPessoa)
-router.put('/pessoas/:id', PessoaController.atualizarPessoa)
-router.delete('/pessoas/:id', PessoaController.deletaPessoa)
-router.post('/pessoas/:id/restaura', PessoaController.restauraPessoa)
-/******************Matriculas *************************/
-router.get('/pessoas/:estudanteId/matricula/:matriculaId',  PessoaController.listaUmaMatricula)
-router.get('/pessoas/:estudanteId/matricula', PessoaController.pegaMatricula)
-router.get('/pessoas/matricula/:turmaId/confirmadas', PessoaController.pegaMatriculaPorId)
-router.get('/pessoas/matricula/lotada', PessoaController.turmaLotada)
-router.post('/pessoas/:estudanteId/matricula', PessoaController.criaMatricula)
-router.post('/pessoas/:estudanteId/cancela', PessoaController.cancelaMatricula)
-router.put('/pessoas/:estudanteId/matricula/:matriculaId',  PessoaController.atualizaMatricula)
-router.delete('/pessoas/:estudanteId/matricula/:matriculaId',  PessoaController.apagaMatricula)
-router.post('/pessoas/:estudanteId/matricula/:matriculaId/restaura', PessoaController.restauraMatricula)
+router.post('/pessoas/:id/restaura', PessoaController.restauraPessoa)  
+router.post('/pessoas/:estudanteId/cancela', PessoaController.cancelaPessoa)  
 
+router.put('/pessoas/:id', PessoaController.atualizaPessoa)  
 
-module.exports = router;
+router.delete('/pessoas/:id', PessoaController.apagaPessoa)
+
+/**Matriculas */
+router.get('/pessoas/:estudanteId/matricula/:matriculaId', MatriculaController.umaMatricula)  
+router.get('/pessoas/matricula/:turmaId/confirmadas', MatriculaController.pegaMatriculasPorTurma)  
+router.get('/pessoas/matricula/lotada', MatriculaController.pegaTurmasLotadas)
+
+router.post('/pessoas/:estudanteId/matricula', MatriculaController.criaMatricula)  
+router.post('/pessoas/:estudanteId/matricula/:matriculaId/restaura', MatriculaController.restauraMatricula)  
+
+router.put('/pessoas/:estudanteId/matricula/:matriculaId', MatriculaController.atualizaMatricula)  
+
+router.delete('/pessoas/:estudanteId/matricula/:matriculaId', MatriculaController.apagaMatricula)  
+
+module.exports = router
